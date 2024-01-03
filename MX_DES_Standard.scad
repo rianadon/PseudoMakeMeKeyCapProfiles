@@ -245,23 +245,23 @@ path_trans2 = [for (t=[0:step:180])   translation(oval_path(t,0,10,15,2,0))*rota
 //--------------Function definng Cap
 function CapTranslation(t, keyID) =
   [
-    ((1-t)/layers*TopWidShift(keyID)),   //X shift
-    ((1-t)/layers*TopLenShift(keyID)),   //Y shift
-    (t/layers*KeyHeight(keyID))    //Z shift
+    ((0-t)/(layers-1)*TopWidShift(keyID)),   //X shift
+    ((0-t)/(layers-1)*TopLenShift(keyID)),   //Y shift
+    (t/(layers-1)*KeyHeight(keyID))    //Z shift
   ];
 
 function InnerTranslation(t, keyID) =
   [
-    ((1-t)/layers*TopWidShift(keyID)),   //X shift
-    ((1-t)/layers*TopLenShift(keyID)),   //Y shift
-    (t/layers*(KeyHeight(keyID)-topthickness))    //Z shift
+    ((0-t)/(layers-1)*TopWidShift(keyID)),   //X shift
+    ((0-t)/(layers-1)*TopLenShift(keyID)),   //Y shift
+    (t/(layers-1)*(KeyHeight(keyID)-topthickness))    //Z shift
   ];
 
 function CapRotation(t, keyID) =
   [
-    ((1-t)/layers*XAngleSkew(keyID)),   //X shift
-    ((1-t)/layers*YAngleSkew(keyID)),   //Y shift
-    ((1-t)/layers*ZAngleSkew(keyID))    //Z shift
+    ((0-t)/(layers-1)*XAngleSkew(keyID)),   //X shift
+    ((0-t)/(layers-1)*YAngleSkew(keyID)),   //Y shift
+    ((0-t)/(layers-1)*ZAngleSkew(keyID))    //Z shift
   ];
 
 function CapTransform(t, keyID) =
