@@ -245,23 +245,23 @@ path_trans2 = [for (t=[0:step:180])   translation(oval_path(t,0,10,15,2,0))*rota
 //--------------Function definng Cap
 function CapTranslation(t, keyID) =
   [
-    ((0-t)/(layers-1)*TopWidShift(keyID)),   //X shift
-    ((0-t)/(layers-1)*TopLenShift(keyID)),   //Y shift
-    (t/(layers-1)*KeyHeight(keyID))    //Z shift
+    ((0-t)/layers*TopWidShift(keyID)),   //X shift
+    ((0-t)/layers*TopLenShift(keyID)),   //Y shift
+    (t/layers*KeyHeight(keyID))    //Z shift
   ];
 
 function InnerTranslation(t, keyID) =
   [
-    ((0-t)/(layers-1)*TopWidShift(keyID)),   //X shift
-    ((0-t)/(layers-1)*TopLenShift(keyID)),   //Y shift
-    (t/(layers-1)*(KeyHeight(keyID)-topthickness))    //Z shift
+    ((0-t)/layers*TopWidShift(keyID)),   //X shift
+    ((0-t)/layers*TopLenShift(keyID)),   //Y shift
+    (t/layers*(KeyHeight(keyID)-topthickness))    //Z shift
   ];
 
 function CapRotation(t, keyID) =
   [
-    ((0-t)/(layers-1)*XAngleSkew(keyID)),   //X shift
-    ((0-t)/(layers-1)*YAngleSkew(keyID)),   //Y shift
-    ((0-t)/(layers-1)*ZAngleSkew(keyID))    //Z shift
+    ((0-t)/layers*XAngleSkew(keyID)),   //X shift
+    ((0-t)/layers*YAngleSkew(keyID)),   //Y shift
+    ((0-t)/layers*ZAngleSkew(keyID))    //Z shift
   ];
 
 function CapTransform(t, keyID) =
@@ -325,11 +325,11 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
   difference(){
     union(){
       difference(){
-        skin([for (i=[0:layers-1]) transform(translation(CapTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(CapTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]); //outer shell
+        skin([for (i=[0:layers]) transform(translation(CapTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(CapTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]); //outer shell
 
         //Cut inner shell
         if(Stem == true){
-          translate([0,0,-.001])skin([for (i=[0:layers-1]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
+          translate([0,0,-.001])skin([for (i=[0:layers]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
         }
       }
       if(Stem == true){
@@ -338,7 +338,7 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
           skin(StemCurve);
           skin(StemCurve2);
         }
-//        translate([0,0,-.001])skin([for (i=[0:stemLayers-1]) transform(translation(StemTranslation(i,keyID))*rotation(StemRotation(i, keyID)), rounded_rectangle_profile(StemTransform(i, keyID),fn=fn,r=StemRadius(i, keyID)))]); //Transition Support for taller profile
+//        translate([0,0,-.001])skin([for (i=[0:stemLayers]) transform(translation(StemTranslation(i,keyID))*rotation(StemRotation(i, keyID)), rounded_rectangle_profile(StemTransform(i, keyID),fn=fn,r=StemRadius(i, keyID)))]); //Transition Support for taller profile
       }
     //cut for fonts and extra pattern for light?
     }
